@@ -33,105 +33,140 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Hasan Ali Daoud',
                 'email' => 'hasandaoud28@gmail.com',
                 'phone' => '0991123128',
-                'preferred_help' => 'Theater, Reading Lab, Events, Festivals, Red Cross, Civil Work, Performing Arts',
+                'preferred_help' => '',
             ],
             //2
             [
                 'name' => 'Riman Hamzeh Katbeh',
                 'email' => 'remankat@gmail.com',
                 'phone' => '0947772493',
-                'preferred_help' => 'Events, Team Coordination, Photography, Cinema Gathering',
+                'preferred_help' => 'Free media - Monitoring and Evaluation Unit',
             ],
             //3
             [
                 'name' => 'Naseem Khalil',
                 'email' => 'nasemkhalel401@gmail.com',
                 'phone' => '0953408978',
-                'preferred_help' => 'Cinema Scene, Acting Facilitator, Theater and Directing, Jaramana Gathering',
+                'preferred_help' => 'Free media',
             ],
             //4
             [
                 'name' => 'Naamah Matrak Hamsho',
                 'email' => 'naameh69@gmail.com',
                 'phone' => '0997200642',
-                'preferred_help' => 'Cinema, Reading Lab, Events, SOS Association Sessions, Family Planning, Psychological Support',
+                'preferred_help' => '',
             ],
             //5
             [
                 'name' => 'Firas Hamadeh Al-Assaf',
                 'email' => 'ferasassaf5@gmail.com',
                 'phone' => '0964992019',
-                'preferred_help' => 'Cinema, Reading Lab, Events, Entrepreneurship, Tourism College Conferences Organization',
+                'preferred_help' => 'Psychological and social support - Social activities',
             ],
             //6
             [
                 'name' => 'Aton Azzam Al-Jundi',
                 'email' => 'atoonaljndi1@gmail.com',
                 'phone' => '0930752596',
-                'preferred_help' => 'Architecture, Graphic Design, Visual Materials, Event Logistics, Engineering Grouping',
+                'preferred_help' => 'Social activities',
             ],
             //7
             [
                 'name' => 'Hammam Wael Al-Matni',
                 'email' => 'humammatni@gmail.com',
                 'phone' => '0954231862',
-                'preferred_help' => 'Cinema, Events, Copywriting, Social Media Management, War-affected Support, Medical Grouping',
+                'preferred_help' => 'Social activities',
             ],
             //8
             [
                 'name' => 'Anas Youssef Youssef',
                 'email' => 'anassyousef76@gmail.com',
                 'phone' => '0938948070',
-                'preferred_help' => 'Music, Civil Events, Health Campaigns, Mobile Medical Team with Red Cross, Oxfam Field Support',
+                'preferred_help' => '',
             ],
             //9
-            [
-                'name' => 'Mohammad Mounir Mamo',
-                'email' => 'mamo32768@gmail.com',
-                'phone' => '0994362122',
-                'preferred_help' => 'AI, Excel, Dialogue Session Facilitation, Data Collection, Medical Files, Food Baskets Distribution',
-            ],
-            //10-email!
             [
                 'name' => 'Ayoub Bassam Al-Jaramani',
                 'email' => 'aljramane.ayoub@gmail.com',
                 'phone' => '0938268930',
-                'preferred_help' => 'Educational Support, Vocal Training, Academic Tutoring, Educational Grouping',
+                'preferred_help' => 'Psychological and social support',
             ],
-            //11
+            //10
             [
                 'name' => 'Hadi Walid Shalash',
                 'email' => 'hadishalsh3@gmail.com',
                 'phone' => '0968242964',
-                'preferred_help' => 'Monitoring & Evaluation, Media, Project Coordination, JCI Local Manager, Children Psychological Support',
+                'preferred_help' => '',
             ],
-            //12
+            //11
             [
                 'name' => 'Majd Shadi Al-Laham',
                 'email' => 'majodallaham@gmail.com',
                 'phone' => '0992263353',
-                'preferred_help' => 'Theater Trainer in Womadat Association, Performing Arts',
+                'preferred_help' => 'Psychological and social support',
             ],
-            //13
+            //12
             [
                 'name' => 'Faris Wahbeh Al-Sabbagh',
                 'email' => 'alsabbaghxfares@gmail.com',
                 'phone' => '0947260440',
-                'preferred_help' => 'Visual Arts, Creative Artistic Initiatives, Singing, Oriental Percussion, Syrian Scout Alum',
+                'preferred_help' => 'Social activities',
             ],
-            //14
+            //13
             [
                 'name' => 'Yumna Ghassan Al-Dakkak',
                 'email' => '7youmnashidakkak@gmail.com',
                 'phone' => '0962431021',
-                'preferred_help' => 'Psychological Support, Reading Lab, Events, Children Activities Organization',
+                'preferred_help' => 'IT Department',
             ],
-            //15
+            //14
             [
                 'name' => 'Diya Hisham Monther',
                 'email' => 'deyaamonther98@gmail.com',
                 'phone' => '0962352319',
-                'preferred_help' => 'Cinema Scene, Reading Lab, Events, Team and Individual Work, AI and Excel, Dialogue Session Facilitation, Psychological and Community Issues, Data Collection, Medical Files, Food Baskets Distribution, Material Need Assessment, Entrepreneurship Gathering',
+                'preferred_help' => '',
+            ],
+            //15
+            [
+                'name' => 'Ashraf Al-Afif',
+                'email' => 'alafifashooo@gmail.com',
+                'phone' => '0991546367',
+                'preferred_help' => 'Social activities - Monitoring and Evaluation Unit',
+            ],
+            //16
+            [
+                'name' => 'Salam Munzer',
+                'email' => 'salam.monther99@gmail.com',
+                'phone' => '0993492895',
+                'preferred_help' => 'Social activities - Psychological and social support',
+            ],
+            //17
+            [
+                'name' => 'Ashraf Badi Al-Wais',
+                'email' => 'Lwesashraf@gmail.com',
+                'phone' => '0964546227',
+                'preferred_help' => 'Psychological and social support',
+            ],
+            //18
+            [
+                'name' => 'Obaida Rabee Raad',
+                'email' => 'obaidaraad84@gmail.com',
+                'phone' => '0988543269',
+                'preferred_help' => 'Social activities',
+            ],
+            //19
+            [
+                'name' => 'Hamsa Muaid Al-Shaibani',
+                'email' => 'hamsaalshipany@gmail.com',
+                'phone' => '0957860110',
+                'preferred_help' => 'IT Department',
+            ],
+            //20
+            [
+                'name' => 'Rebal Nemr Daoud',
+                'email' => 'dawoodrebal@gmail.com',
+                'phone' => '0998994291',
+                'preferred_help' => 'IT Department',
             ],
         ];
 

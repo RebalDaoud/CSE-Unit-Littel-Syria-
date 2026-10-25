@@ -27,5 +27,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::patch('/volunteers/{volunteerId}/hours', [VolunteerManagementController::class, 'updateHours']);
 
     Route::post('/activities', [ActivityController::class, 'store']);
+    Route::patch('/admin/activities/{id}', [ActivityController::class, 'update']);
     Route::get('/volunteer/schedule', [ActivityAssignmentController::class, 'mySchedule']);
 });
