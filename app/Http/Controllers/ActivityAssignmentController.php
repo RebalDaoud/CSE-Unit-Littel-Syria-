@@ -2,35 +2,31 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Auth\AssignVolunteersRequest;
+use App\Http\Requests\Auth\UpdateSupervisorRequest;
 use App\Models\ActivitySession;
-use App\Models\User;
+use App\Services\ActivityAssignmentService;
 use Illuminate\Http\Request;
 
 class ActivityAssignmentController extends Controller
 {
-    public function getVolunteersForSelection(Request $request, $sessionId)
+    //Newly added constructor to inject the ActivityAssignmentService
+    public function __construct(protected ActivityAssignmentService $assignmentService) {}
+
+    public function getVolunteersForSelection(Request $request, int $sessionId)
     {
         /** @var \App\Models\User $user */
         $user = $request->user();
 
-        $session = ActivitySession::with([
-            'volunteers.volunteerProfile'
-        ])->findOrFail($sessionId);
+        $data = $this->assignmentService->getSessionVolunteersForDropdown($sessionId);
+        $session = $data['session'];
+        $dropdownList = $data['dropdownList'];
 
-        if ($user->role !== 'admin' && $user->id != $session->supervisor_id) {
+        if ($user->cannot('manageVolunteers', $session)) {
             return response()->json([
                 'message' => 'Sorry, you are not authorized to view the volunteers for this session.'
             ], 403);
         }
-        
-        $dropdownList = $session->volunteers->map(function ($volunteer) {
-            return [
-                'id' => $volunteer->id,
-                'name' => $volunteer->name,
-                'total_hours' => $volunteer->volunteerProfile ? (float) $volunteer->volunteerProfile->total_hours : 0.00,
-                'completion_percentage' => $volunteer->volunteerProfile ? $volunteer->volunteerProfile->completion_percentage : 0.00,
-            ];
-        });
 
         return response()->json([
             'session_id' => $session->id,
@@ -39,64 +35,61 @@ class ActivityAssignmentController extends Controller
         ], 200);
     }
 
-    public function assignVolunteers(Request $request, $sessionId)
+    public function assignVolunteers(AssignVolunteersRequest $request, int $sessionId)
     {
-        $request->validate([
-            'volunteer_ids' => 'required|array',
-            'volunteer_ids.*' => 'exists:users,id',
-        ]);
-
         /** @var \App\Models\User $user */
         $user = $request->user();
 
-        $session = ActivitySession::with('supervisor', 'activity')->findOrFail($sessionId);
+        $session = ActivitySession::findOrFail($sessionId);
 
-        if ($user->role !== 'admin' && $user->id != $session->supervisor_id) {
+        if ($user->cannot('manageVolunteers', $session)) {
             return response()->json([
                 'message' => 'Sorry, you are not authorized to assign volunteers to this session.'
             ], 403);
         }
 
-        $session->volunteers()->sync($request->volunteer_ids);
+        $updatedSession = $this->assignmentService->assignVolunteersToSession(
+            $sessionId,
+            $request->validated('volunteer_ids')
+        );
 
         return response()->json([
             'message' => 'Volunteers assigned to session successfully.',
-            'session' => $session->load('volunteers', 'supervisor')
+            'session' => $updatedSession
         ], 200);
     }
 
 
-    public function updateSupervisor(Request $request, $sessionId)
+    public function updateSupervisor(UpdateSupervisorRequest $request, int $sessionId)
     {
-        $request->validate([
-            'supervisor_id' => 'required|exists:users,id',
-        ]);
-
         /** @var \App\Models\User $user */
         $user = $request->user();
 
+        $session = ActivitySession::findOrFail($sessionId);
 
-        if ($user->role !== 'admin') {
+        //We can write a policy check with out put a class "ActivitySessionPolicy" because of lavral auto discovery of policy classes based on model names. 
+        if ($user->cannot('updateSupervisor', $session)) {
             return response()->json([
                 'message' => 'Sorry, you are not authorized to update the supervisor for this session.'
             ], 403);
         }
 
-        $session = ActivitySession::findOrFail($sessionId);
-        $session->supervisor_id = $request->supervisor_id;
-        $session->save();
+        $updatedSession = $this->assignmentService->updateSessionSupervisor(
+            $sessionId,
+            $request->validated('supervisor_id')
+        );
 
         return response()->json([
             'message' => 'Supervisor updated for session successfully.',
-            'session' => $session->load('supervisor', 'activity')
-        ]);
+            'session' => $updatedSession
+        ], 200);
     }
 
     public function mySchedule(Request $request)
     {
         /** @var \App\Models\User $user */
         $user = $request->user();
-        $assignedActivities = $user->assignedActivities()->get();
+        $assignedActivities = $this->assignmentService->getUserSchedule($user);
 
         return response()->json([
             'message' => 'Your schedule',
@@ -114,23 +107,21 @@ class ActivityAssignmentController extends Controller
         ], 200);
     }
 
-    public function applyForSession(Request $request, $sessionId)
+    public function applyForSession(Request $request, int $sessionId)
     {
         /** @var \App\Models\User $user */
         $user = $request->user();
 
-        if ($user->role !== 'volunteer') {
+        $session = ActivitySession::findOrFail($sessionId);
+
+        if ($user->cannot('apply', $session)) {
             return response()->json(
                 ['message' => 'Sorry, you are not authorized to view this.'],
                 403
             );
         }
 
-        $session = ActivitySession::findOrFail($sessionId);
-
-        $session->volunteers()->syncWithoutDetaching([
-            $user->id => ['status' => 'pending']
-        ]);
+        $this->assignmentService->applyUserForSession($user, $sessionId);
 
         return response()->json([
             'message' => 'Your request to join this session has been successfully registered and is awaiting supervisor approval.'
