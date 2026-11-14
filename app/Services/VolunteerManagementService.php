@@ -4,20 +4,31 @@ namespace App\Services;
 
 use App\Models\User;
 use App\Models\VolunteerProfile;
+use App\Actions\AddHoursAction;
+use App\Actions\SetHoursAction;
+use Illuminate\Validation\ValidationException;
 
 class VolunteerManagementService
 {
+    protected array $actions = [
+        'add' => AddHoursAction::class,
+        'set' => SetHoursAction::class,
+    ];
+
     public function updateHours(int $volunteerId, array $data): User
     {
         $volunteer = User::with('volunteerProfile')->findOrFail($volunteerId);
 
         $profile = $volunteer->volunteerProfile()->firstOrCreate(['user_id' => $volunteer->id]);
 
-        if ($data['action'] === 'add') {
-            $profile->total_hours += $data['hours'];
-        } else {
-            $profile->total_hours = $data['hours'];
+        $actionType = $data['action'];
+
+        if (!isset($this->actions[$actionType])) {
+            throw ValidationException::withMessages(['action' => 'Invalid action type.']);
         }
+
+        $action = app($this->actions[$actionType]);
+        $action->execute($profile, (float) $data['hours']);
 
         $profile->save();
 
