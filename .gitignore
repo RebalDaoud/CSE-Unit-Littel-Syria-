@@ -1,11 +1,11 @@
 .DS_Store
 .env
-.resources
+/resources
 .env.backup
 .env.production
 .phpactor.json
 .phpunit.result.cache
-.AGENTS.md
+AGENTS.md
 /.fleet
 /.idea
 /.nova

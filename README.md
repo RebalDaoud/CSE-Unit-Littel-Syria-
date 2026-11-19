@@ -13,10 +13,10 @@ A robust, RESTful API built with **Laravel 11** and **Laravel Sanctum** to manag
 
 ## 🛠️ Tech Stack & Architecture
 
-- **Framework:** Laravel 11
+- **Framework:** Laravel 12
 - **Database:** MySQL / PostgreSQL
 - **Authentication:** Laravel Sanctum
-- **Architecture:** Controller-Service pattern with Eloquent ORM relationships (`belongsToMany`, `hasMany`, `hasOne`).
+- **Architecture:** Controller-Service pattern with Eloquent ORM relationships (`belongsToMany`, `hasMany`, `hasOne`) and SOLID Principles.
 
 ## 📋 API Endpoints Summary
 
