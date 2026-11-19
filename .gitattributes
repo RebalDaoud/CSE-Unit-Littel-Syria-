@@ -8,3 +8,7 @@
 
 CHANGELOG.md export-ignore
 README.md export-ignore
+
+resources/** linguist-vendored
+*.ts linguist-vendored
+*.tsx linguist-vendored
